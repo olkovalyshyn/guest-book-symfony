@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+{#    {{ knp_pagination_render(messages) }}#}
+
+    {% if app.user %}
+    <a href="{{ path('app_add_message') }}"><button type="button" class="btn btn-outline-success">Add message</button></a>
+    {% endif %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card bg-light mb-3 mt-3">
+                    <div class="card-body">
+                        <div class="card-header">List of messages</div>
+
+                        <table class="table">
+                            <tr>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Message</th>
+                                <th>Date</th>
+                            </tr>
+                            {% for item in messages %}
+                                <tr>
+                                    <td>{{ item.username }}</td>
+                                    <td>{{ item.email }}</td>
+                                    <td>{{ item.message }}</td>
+                                    <td>{{ item.date|date('Y-m-d H:i:s') }}</td>
+
+                                    {% if app.user != null %}
+                                        <td>
+                                            <a href="{{ path('app_edit', {'id': item.id}) }}">
+                                                <button type="button" class="btn btn-info">Edit</button>
+                                            </a>
+                                        </td>
+                                        <td><a href="{{ path('app_delete', {'id': item.id}) }}">
+                                                <button type="button" class="btn btn-danger">Delete</button>
+                                            </a></td>
+                                    {% endif %}
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{#    {{ knp_pagination_render(messages) }}#}
+
+{% endblock %}
